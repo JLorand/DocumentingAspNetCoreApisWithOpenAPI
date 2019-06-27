@@ -25,6 +25,10 @@ namespace Library.API.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Gets all the authors
+        /// </summary>
+        /// <returns>All of the authors</returns>
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Author>>> GetAuthors()
         {
@@ -32,6 +36,11 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<IEnumerable<Author>>(authorsFromRepo));
         }
 
+        /// <summary>
+        /// Gets an author specified by the id
+        /// </summary>
+        /// <param name="authorId"></param>
+        /// <returns>An author</returns>
         [HttpGet("{authorId}")]
         public async Task<ActionResult<Author>> GetAuthor(
             Guid authorId)
@@ -45,6 +54,12 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<Author>(authorFromRepo));
         }
 
+        /// <summary>
+        /// Updates the author
+        /// </summary>
+        /// <param name="authorId">The id of the author to update</param>
+        /// <param name="authorForUpdate">New data for author</param>
+        /// <returns>Updated author</returns>
         [HttpPut("{authorId}")]
         public async Task<ActionResult<Author>> UpdateAuthor(
             Guid authorId,
@@ -66,6 +81,23 @@ namespace Library.API.Controllers
             return Ok(_mapper.Map<Author>(authorFromRepo)); 
         }
 
+        /// <summary>
+        /// Partially updates the author
+        /// </summary>
+        /// <param name="authorId">Author's Id to update</param>
+        /// <param name="patchDocument">Json patch document</param>
+        /// <returns>Updated author</returns>
+        /// <remarks>
+        /// Sample request
+        /// PATCH /authors/id \
+        /// [\
+        /// {\
+        /// "op": "replace",\
+        /// "path": "/firstname",\
+        /// "value": "new first name"\
+        /// }\
+        /// ]
+        /// </remarks>
         [HttpPatch("{authorId}")]
         public async Task<ActionResult<Author>> UpdateAuthor(
             Guid authorId,
